@@ -2,13 +2,17 @@
 
 A comprehensive web application that analyzes news articles for bias, factuality, and provides comparative coverage from multiple sources with simulated social media sentiment analysis.
 
-Demo Link:https://monumental-monstera-01223e.netlify.app/
+Demo Link:https://lambent-souffle-24885f.netlify.app/
 
 # Screenshots
 ![image](https://github.com/user-attachments/assets/e54a5fe1-9f9e-4a9c-b4b2-392aa9bac762)
 ![image](https://github.com/user-attachments/assets/5eefae34-9f95-4711-b469-3184dbe652c3)
 ![image](https://github.com/user-attachments/assets/659a27a7-8bc1-4136-99f8-bd4bda72a534)
 ![image](https://github.com/user-attachments/assets/0fe17c63-e048-40c5-a077-fa69cd3ad9a2)
+![Screenshot 2025-07-05 123704](https://github.com/user-attachments/assets/4e9de2ff-1b99-4e49-9b27-05f277287336)
+![Screenshot 2025-07-05 123636](https://github.com/user-attachments/assets/27834fe8-481c-4f23-a533-b707f8022f16)
+![Screenshot 2025-07-05 123729](https://github.com/user-attachments/assets/75083a4c-6cc7-425d-8cd6-e7261c40a436)
+![Screenshot 2025-07-05 123819](https://github.com/user-attachments/assets/45577e2f-927e-44bb-941a-8aad496658a5)
 
 
 
@@ -23,6 +27,7 @@ Demo Link:https://monumental-monstera-01223e.netlify.app/
 - **Source Credibility**: Comprehensive database of news source bias ratings
 - **Personal Analytics**: Track your reading habits and bias exposure
 - **Modern UI**: Aurora backgrounds, click effects, and glassmorphism design
+- 
 
 ## API Integration
 
