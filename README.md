@@ -251,9 +251,7 @@ npm run preview
 - Include accessibility considerations
 - Test across different browsers and devices
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -263,11 +261,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Lucide** for the beautiful icon library
 - **React** and **TypeScript** communities for excellent tooling
 
-## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/bias-buster/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/bias-buster/discussions)
-- **Email**: support@biasbuster.app
 
 ## 🔮 Roadmap
 
@@ -276,8 +270,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] **API Endpoints**: Public API for bias analysis integration
 - [ ] **Machine Learning**: Enhanced bias detection with custom ML models
 - [ ] **Social Features**: Share analyses and compare reading habits with friends
-- [ ] **Mobile App**: Native iOS and Android applications
+
 
 ---
 
-**Built with ❤️ for media literacy and informed citizenship**
+**Built by Hacksmiths for media literacy and informed citizenship**
