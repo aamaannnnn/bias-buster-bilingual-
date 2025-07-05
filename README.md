@@ -2,7 +2,7 @@
 
 A comprehensive web application that analyzes news articles for bias, factuality, and provides comparative coverage from multiple sources with simulated social media sentiment analysis.
 
-Demo Link:https://lambent-souffle-24885f.netlify.app/
+Demo Link:https://leafy-chimera-e2570b.netlify.app/
 
 # Screenshots
 ![image](https://github.com/user-attachments/assets/e54a5fe1-9f9e-4a9c-b4b2-392aa9bac762)
