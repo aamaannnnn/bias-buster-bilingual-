@@ -18,6 +18,7 @@ export interface UseTTSReturn {
   setVolume: (volume: number) => void;
   setSpeed: (speed: number) => void;
   readHeaders: () => Promise<void>;
+  readPageContent: () => Promise<void>;
 }
 
 export const useTextToSpeech = (): UseTTSReturn => {
@@ -25,7 +26,7 @@ export const useTextToSpeech = (): UseTTSReturn => {
   const [isPaused, setIsPaused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentVoice, setCurrentVoice] = useState('rachel');
+  const [currentVoice, setCurrentVoice] = useState('EXAVITQu4vr4xnSDxMaL'); // Default to Bella
   const [volume, setVolumeState] = useState(0.8);
   const [speed, setSpeedState] = useState(1.0);
 
@@ -38,6 +39,17 @@ export const useTextToSpeech = (): UseTTSReturn => {
     }, 100);
 
     return () => clearInterval(interval);
+  }, []);
+
+  // Load saved preferences
+  useEffect(() => {
+    const savedVoice = localStorage.getItem('tts-voice');
+    const savedVolume = localStorage.getItem('tts-volume');
+    const savedSpeed = localStorage.getItem('tts-speed');
+
+    if (savedVoice) setCurrentVoice(savedVoice);
+    if (savedVolume) setVolumeState(parseFloat(savedVolume));
+    if (savedSpeed) setSpeedState(parseFloat(savedSpeed));
   }, []);
 
   const speak = useCallback(async (text: string) => {
@@ -71,10 +83,12 @@ export const useTextToSpeech = (): UseTTSReturn => {
 
   const pause = useCallback(() => {
     ttsService.pause();
+    setError(null);
   }, []);
 
   const resume = useCallback(() => {
     ttsService.resume();
+    setError(null);
   }, []);
 
   const stop = useCallback(() => {
@@ -84,43 +98,84 @@ export const useTextToSpeech = (): UseTTSReturn => {
 
   const setVoice = useCallback((voiceId: string) => {
     setCurrentVoice(voiceId);
+    localStorage.setItem('tts-voice', voiceId);
   }, []);
 
   const setVolume = useCallback((newVolume: number) => {
     const clampedVolume = Math.max(0, Math.min(1, newVolume));
     setVolumeState(clampedVolume);
     ttsService.setVolume(clampedVolume);
+    localStorage.setItem('tts-volume', clampedVolume.toString());
   }, []);
 
   const setSpeed = useCallback((newSpeed: number) => {
     const clampedSpeed = Math.max(0.5, Math.min(2.0, newSpeed));
     setSpeedState(clampedSpeed);
+    localStorage.setItem('tts-speed', clampedSpeed.toString());
   }, []);
 
   const readHeaders = useCallback(async () => {
     try {
-      // Find all headers on the page
-      const headers = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-      const headerTexts: string[] = [];
-
-      headers.forEach((header) => {
-        const text = header.textContent?.trim();
-        if (text && text.length > 0) {
-          // Add appropriate pauses between headers
-          headerTexts.push(text);
-        }
-      });
-
-      if (headerTexts.length === 0) {
-        throw new Error('No headers found on the page');
+      setError(null);
+      
+      // Extract headings from the page
+      const headings = ttsService.extractHeadingsFromPage();
+      
+      if (headings.length === 0) {
+        throw new Error('No headings found on this page');
       }
 
-      // Join headers with pauses for better speech flow
-      const combinedText = headerTexts.join('. ... '); // Ellipsis creates natural pauses
+      // Create a natural narrative from the headings
+      const narrative = ttsService.createHeadingNarrative(headings);
       
-      await speak(combinedText);
+      await speak(narrative);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to read headers';
+      setError(errorMessage);
+    }
+  }, [speak]);
+
+  const readPageContent = useCallback(async () => {
+    try {
+      setError(null);
+      
+      // Extract main content from the page
+      const contentSelectors = [
+        'main',
+        'article',
+        '.content',
+        '.post-content',
+        '.article-content',
+        '.entry-content',
+        '[role="main"]'
+      ];
+
+      let content = '';
+      for (const selector of contentSelectors) {
+        const element = document.querySelector(selector);
+        if (element) {
+          // Remove unwanted elements
+          const clone = element.cloneNode(true) as Element;
+          const unwanted = clone.querySelectorAll('script, style, nav, header, footer, .ad, .advertisement, .menu, .sidebar, .social-share, .comments');
+          unwanted.forEach(el => el.remove());
+          
+          content = clone.textContent || '';
+          if (content.length > 200) break; // Found substantial content
+        }
+      }
+
+      if (!content || content.length < 50) {
+        throw new Error('No substantial content found on this page');
+      }
+
+      // Limit content length for better TTS experience
+      if (content.length > 5000) {
+        content = content.substring(0, 5000) + '... Content truncated for speech synthesis.';
+      }
+
+      await speak(content);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to read page content';
       setError(errorMessage);
     }
   }, [speak]);
@@ -141,6 +196,7 @@ export const useTextToSpeech = (): UseTTSReturn => {
     setVoice,
     setVolume,
     setSpeed,
-    readHeaders
+    readHeaders,
+    readPageContent
   };
 };
