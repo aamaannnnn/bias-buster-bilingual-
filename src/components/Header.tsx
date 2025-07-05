@@ -4,6 +4,7 @@ import { useBias } from '../context/BiasContext';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageSelector } from './LanguageSelector';
 import { ThemeSwitcher } from './ThemeSwitcher';
+import { TextToSpeechControls } from './TextToSpeechControls';
 
 interface HeaderProps {
   activeTab: 'analyzer' | 'dashboard' | 'sources' | 'settings';
@@ -69,7 +70,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             })}
           </nav>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
+            <TextToSpeechControls />
             <LanguageSelector />
             <ThemeSwitcher />
           </div>

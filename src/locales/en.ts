@@ -50,6 +50,23 @@ export const en = {
       highContrastDesc: 'Maximum contrast for low vision'
     }
   },
+  tts: {
+    readHeaders: 'Read All Headers',
+    pause: 'Pause Reading',
+    resume: 'Resume Reading',
+    stop: 'Stop Reading',
+    settings: 'TTS Settings',
+    voice: 'Voice',
+    speed: 'Speed',
+    volume: 'Volume',
+    mute: 'Mute',
+    unmute: 'Unmute',
+    loading: 'Loading...',
+    error: 'Speech synthesis error',
+    noHeaders: 'No headers found on this page',
+    howItWorks: 'How it works:',
+    description: 'Click play to read all headers on the current page using high-quality AI voice synthesis.'
+  },
   analyzer: {
     hero: {
       badge: 'AI-Powered Bias Detection',
