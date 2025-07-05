@@ -23,6 +23,7 @@ A comprehensive web application that analyzes news articles for bias, factuality
 ![Text-to-Speech Feature](https://github.com/user-attachments/assets/a2c86298-9b99-45c5-8384-0e43f18c4314)
 *![Screenshot 2025-07-05 142207](https://github.com/user-attachments/assets/ddb35a98-c274-4258-a49f-313db0d24079)
 Advanced text-to-speech controls with multiple voice options*
+![Screenshot 2025-07-05 141700](https://github.com/user-attachments/assets/6b94e71f-8642-4e04-a7aa-aad46160ef22)
 
 ## ✨ Features
 
