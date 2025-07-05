@@ -30,6 +30,26 @@ export const en = {
     sourceDirectory: 'Source Directory',
     apiSettings: 'API Settings'
   },
+  accessibility: {
+    colorblindSupport: 'Colorblind Support',
+    themeChanged: 'Theme changed to',
+    tip: 'Accessibility Tip',
+    tipDescription: 'These themes are designed to improve readability for different types of color vision.',
+    themes: {
+      default: 'Default',
+      defaultDesc: 'Standard color scheme',
+      protanopia: 'Protanopia',
+      protanopiaDesc: 'Red-blind friendly colors',
+      deuteranopia: 'Deuteranopia', 
+      deuteranopiaDesc: 'Green-blind friendly colors',
+      tritanopia: 'Tritanopia',
+      tritanopiaDesc: 'Blue-blind friendly colors',
+      monochrome: 'Monochrome',
+      monochromeDesc: 'Grayscale for complete color blindness',
+      highContrast: 'High Contrast',
+      highContrastDesc: 'Maximum contrast for low vision'
+    }
+  },
   analyzer: {
     hero: {
       badge: 'AI-Powered Bias Detection',

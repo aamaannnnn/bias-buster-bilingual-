@@ -1,8 +1,9 @@
 import React from 'react';
-import { Search, BarChart3, Database, Settings, Moon, Sun } from 'lucide-react';
+import { Search, BarChart3, Database, Settings } from 'lucide-react';
 import { useBias } from '../context/BiasContext';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageSelector } from './LanguageSelector';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface HeaderProps {
   activeTab: 'analyzer' | 'dashboard' | 'sources' | 'settings';
@@ -10,7 +11,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
-  const { darkMode, setDarkMode } = useBias();
+  const { darkMode } = useBias();
   const { t } = useLanguage();
 
   const tabs = [
@@ -46,10 +47,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                     darkMode 
-                      ? 'hover:bg-white/20' 
-                      : 'hover:bg-black/10'
+                      ? 'hover:bg-white/20 focus:ring-blue-400' 
+                      : 'hover:bg-black/10 focus:ring-blue-500'
                   } ${
                     activeTab === tab.id
                       ? darkMode 
@@ -59,6 +60,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                         ? 'text-gray-300 hover:text-white' 
                         : 'text-gray-600 hover:text-gray-900'
                   }`}
+                  aria-current={activeTab === tab.id ? 'page' : undefined}
                 >
                   <Icon className="w-4 h-4" />
                   <span className="hidden sm:inline">{tab.label}</span>
@@ -69,18 +71,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
 
           <div className="flex items-center space-x-2">
             <LanguageSelector />
-            
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className={`p-2 rounded-lg transition-all duration-200 ${
-                darkMode 
-                  ? 'bg-white/10 hover:bg-white/20 text-yellow-400' 
-                  : 'bg-black/10 hover:bg-black/20 text-gray-700'
-              }`}
-              title={darkMode ? t('common.lightMode') : t('common.darkMode')}
-            >
-              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
+            <ThemeSwitcher />
           </div>
         </div>
       </div>

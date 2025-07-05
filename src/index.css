@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --color-primary: #3b82f6;
+    --color-secondary: #8b5cf6;
+    --color-accent: #ec4899;
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+  }
+
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -16,9 +25,109 @@
   .light {
     color-scheme: light;
   }
+
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 }
 
 @layer utilities {
+  /* Colorblind theme overrides */
+  [data-colorblind-theme="protanopia"] {
+    --color-primary: #0ea5e9;
+    --color-secondary: #f59e0b;
+    --color-accent: #84cc16;
+    --color-success: #84cc16;
+    --color-warning: #f59e0b;
+    --color-error: #0ea5e9;
+  }
+
+  [data-colorblind-theme="deuteranopia"] {
+    --color-primary: #0ea5e9;
+    --color-secondary: #f59e0b;
+    --color-accent: #a855f7;
+    --color-success: #0ea5e9;
+    --color-warning: #f59e0b;
+    --color-error: #a855f7;
+  }
+
+  [data-colorblind-theme="tritanopia"] {
+    --color-primary: #ef4444;
+    --color-secondary: #f59e0b;
+    --color-accent: #84cc16;
+    --color-success: #84cc16;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+  }
+
+  [data-colorblind-theme="monochrome"] {
+    --color-primary: #6b7280;
+    --color-secondary: #374151;
+    --color-accent: #111827;
+    --color-success: #6b7280;
+    --color-warning: #374151;
+    --color-error: #111827;
+  }
+
+  [data-colorblind-theme="high-contrast"] {
+    --color-primary: #000000;
+    --color-secondary: #ffff00;
+    --color-accent: #ff00ff;
+    --color-success: #00ff00;
+    --color-warning: #ffff00;
+    --color-error: #ff0000;
+  }
+
+  .dark[data-colorblind-theme="high-contrast"] {
+    --color-primary: #ffffff;
+    --color-secondary: #ffff00;
+    --color-accent: #ff00ff;
+    --color-success: #00ff00;
+    --color-warning: #ffff00;
+    --color-error: #ff0000;
+  }
+
+  /* High contrast mode specific styles */
+  [data-colorblind-theme="high-contrast"] .bg-gradient-to-r {
+    background: var(--color-primary) !important;
+  }
+
+  [data-colorblind-theme="high-contrast"] .text-blue-400,
+  [data-colorblind-theme="high-contrast"] .text-blue-500,
+  [data-colorblind-theme="high-contrast"] .text-blue-600 {
+    color: var(--color-primary) !important;
+  }
+
+  [data-colorblind-theme="high-contrast"] .text-green-400,
+  [data-colorblind-theme="high-contrast"] .text-green-500 {
+    color: var(--color-success) !important;
+  }
+
+  [data-colorblind-theme="high-contrast"] .text-red-400,
+  [data-colorblind-theme="high-contrast"] .text-red-500 {
+    color: var(--color-error) !important;
+  }
+
+  [data-colorblind-theme="high-contrast"] .text-yellow-400,
+  [data-colorblind-theme="high-contrast"] .text-yellow-500 {
+    color: var(--color-warning) !important;
+  }
+
+  /* Enhanced focus indicators for accessibility */
+  [data-colorblind-theme="high-contrast"] *:focus {
+    outline: 3px solid var(--color-warning) !important;
+    outline-offset: 2px !important;
+  }
+
   .animate-aurora {
     animation: aurora 20s ease-in-out infinite;
   }
@@ -85,7 +194,7 @@
     position: absolute;
     inset: 0;
     padding: 1px;
-    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+    background: linear-gradient(45deg, var(--color-primary), var(--color-secondary), var(--color-accent));
     border-radius: inherit;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
@@ -97,7 +206,7 @@
   }
   
   .hover-glow:hover {
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 30px color-mix(in srgb, var(--color-primary) 30%, transparent);
     transform: translateY(-2px);
   }
   
@@ -181,20 +290,19 @@
   transition: all 0.2s ease-in-out;
 }
 
-/* Focus styles - Dark mode */
+/* Enhanced focus styles for accessibility */
 .dark button:focus,
 .dark input:focus,
 .dark select:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 50%, transparent);
 }
 
-/* Focus styles - Light mode */
 .light button:focus,
 .light input:focus,
 .light select:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent);
 }
 
 /* Glassmorphism effect - Dark mode */
@@ -213,18 +321,26 @@
 
 /* Theme-specific selection colors */
 .dark ::selection {
-  background: rgba(59, 130, 246, 0.3);
+  background: color-mix(in srgb, var(--color-primary) 30%, transparent);
   color: white;
 }
 
 .light ::selection {
-  background: rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--color-primary) 20%, transparent);
   color: #1f2937;
 }
 
-/* Enhanced button styles */
+/* Enhanced button styles using CSS custom properties */
 .btn-primary {
-  @apply bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-2xl transition-all duration-300 hover:from-blue-600 hover:to-purple-700 hover:scale-105 hover:shadow-xl;
+  background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+  @apply text-white font-semibold py-3 px-6 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-xl;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, 
+    color-mix(in srgb, var(--color-primary) 80%, black), 
+    color-mix(in srgb, var(--color-secondary) 80%, black)
+  );
 }
 
 .btn-secondary {
@@ -244,22 +360,26 @@
   @apply bg-white/80 border-gray-200/50;
 }
 
-/* Gradient text utilities */
-.gradient-text-blue {
-  @apply bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent;
+/* Gradient text utilities using CSS custom properties */
+.gradient-text-primary {
+  background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+  @apply bg-clip-text text-transparent;
 }
 
-.gradient-text-purple {
-  @apply bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent;
+.gradient-text-accent {
+  background: linear-gradient(to right, var(--color-secondary), var(--color-accent));
+  @apply bg-clip-text text-transparent;
 }
 
 .gradient-text-rainbow {
-  @apply bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent;
+  background: linear-gradient(to right, var(--color-primary), var(--color-secondary), var(--color-accent));
+  @apply bg-clip-text text-transparent;
 }
 
 /* Loading spinner */
 .spinner {
-  @apply animate-spin rounded-full border-2 border-gray-300 border-t-blue-500;
+  @apply animate-spin rounded-full border-2 border-gray-300;
+  border-top-color: var(--color-primary);
 }
 
 /* Floating animation */
@@ -290,15 +410,42 @@
   transform: scale(1.05);
 }
 
-/* Glow effect */
+/* Glow effects using CSS custom properties */
 .glow {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--color-primary) 30%, transparent);
 }
 
-.glow-purple {
-  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+.glow-secondary {
+  box-shadow: 0 0 20px color-mix(in srgb, var(--color-secondary) 30%, transparent);
 }
 
-.glow-pink {
-  box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+.glow-accent {
+  box-shadow: 0 0 20px color-mix(in srgb, var(--color-accent) 30%, transparent);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-primary: #000000;
+    --color-secondary: #ffffff;
+    --color-accent: #ffff00;
+  }
+  
+  .dark {
+    --color-primary: #ffffff;
+    --color-secondary: #000000;
+    --color-accent: #ffff00;
+  }
 }
